@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">PullScrollView</string>
+    <string name="action_settings">Settings</string>
+</resources>

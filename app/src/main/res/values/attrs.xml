@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PullScrollView">
+        <attr name="PullDownMaxDest" format="dimension"></attr>
+        <attr name="HeaderType" format="enum">
+            <enum name="nomal" value="0"/>
+            <enum name="parallax" value="1"/>
+            <enum name="scale" value="2"/>
+        </attr>
+    </declare-styleable>
+</resources>
