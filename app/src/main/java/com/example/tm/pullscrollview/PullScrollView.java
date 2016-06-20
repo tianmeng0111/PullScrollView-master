@@ -52,7 +52,7 @@ public class PullScrollView extends ScrollView {
     //是否可以下拉滑动
     private boolean isMoving = true;
     //向下拉动阻尼系数
-    private static final float SCROLL_RATIO = 0.4f;
+    private float SCROLL_RATIO = 0.4f;
     //放大距离的比例因数；经验证，放大比例为1.1~1.2
     private static final float SCALE_RATIO = 0.2f;
     //视差效果的移动距离
@@ -98,6 +98,9 @@ public class PullScrollView extends ScrollView {
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
+        if (this.onScrollListener != null) {
+            onScrollListener.onScroll(l, t, oldl, oldt);
+        }
         if (getScrollY() == 0) {
 //            Log.e(TAG, "------滑动到顶部");
             isTop = true;
@@ -184,7 +187,7 @@ public class PullScrollView extends ScrollView {
 
                 break;
             case MotionEvent.ACTION_UP:
-                Log.e(TAG, "------------up");
+//                Log.e(TAG, "------------up");
                 if (!rectContent.isEmpty() && isMoving) {
                     rollBackAnim();
                 }
@@ -237,5 +240,25 @@ public class PullScrollView extends ScrollView {
 
     public void setHeaderType(int headerType) {
         mHeaderType = headerType;
+    }
+
+    /**
+     * 更改向下拖动的阻尼系数，阻尼系数越小，拉动越难。
+     * @param ratio
+     */
+    public void setScrollRatio(float ratio) {
+        SCROLL_RATIO = ratio;
+    }
+
+    /**
+     * 外部调用 scroll变化 监听
+     */
+    public interface OnScrollListener {
+        public void onScroll(int l, int t, int oldl, int oldt);
+    }
+    private OnScrollListener onScrollListener;
+
+    public void setOnScrollListener(OnScrollListener onScrollListener) {
+        this.onScrollListener = onScrollListener;
     }
 }
